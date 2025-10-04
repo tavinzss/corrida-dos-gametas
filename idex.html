@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Corrida dos Gametas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Fundo + overlay para contraste -->
+  <div class="background"></div>
+  <div class="backdrop"></div>
+
+  <!-- Top bar -->
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">🏁</span>
+      <span class="title">Corrida dos Gametas</span>
+    </div>
+    <div class="status">
+      <span id="roomInfo" class="badge">Sala: <strong>sala1</strong></span>
+      <span id="roundInfo" class="badge">Rodada: <strong>—</strong></span>
+      <span id="hostInfo" class="badge host">Status: <strong>Jogador</strong></span>
+      <span id="playersInfo" class="badge">Jogadores: <strong>0</strong></span>
+    </div>
+  </header>
+
+  <!-- Container central -->
+  <main class="container">
+
+    <!-- Tela inicial -->
+    <section id="startScreen" class="screen card show">
+      <h2>Bem-vindo!</h2>
+      <p class="subtitle">Escolha seu gameta e entre na sala</p>
+      <div class="form-row">
+        <input id="playerName" placeholder="Digite seu nome" />
+      </div>
+      <div class="role-grid">
+        <button type="button" class="role-card" onclick="joinLobby('Espermatozoide')">
+          <div class="role-emoji">🐟</div>
+          <div class="role-title">Espermatozoide</div>
+          <img src="img/espermatozoide.png" class="gamete-icon" alt="" />
+        </button>
+        <button type="button" class="role-card" onclick="joinLobby('Óvulo')">
+          <div class="role-emoji">🥚</div>
+          <div class="role-title">Óvulo</div>
+          <img src="img/ovulo.png" class="gamete-icon" alt="" />
+        </button>
+      </div>
+    </section>
+
+    <!-- Lobby -->
+    <section id="lobbyScreen" class="screen card">
+      <h2>Sala de Espera</h2>
+      <p class="subtitle">O host inicia a partida quando todos estiverem prontos</p>
+
+      <!-- Claim de host via PIN -->
+      <div class="host-claim">
+        <input id="hostPinInput" placeholder="PIN do host" />
+        <button id="claimHostBtn" type="button" class="btn" onclick="claimHost()">Assumir Host</button>
+      </div>
+
+      <ul id="playersList" class="players-list"></ul>
+
+      <div class="lobby-actions">
+        <button id="startBtn" type="button" class="btn primary" onclick="startGame()">Iniciar Jogo</button>
+        <button id="resetBtn" type="button" class="btn danger" style="display:none" onclick="resetSalaManual()">Resetar Sala (host)</button>
+      </div>
+    </section>
+
+    <!-- Perguntas -->
+    <section id="questionScreen" class="screen card">
+      <div class="question-head">
+        <h2 id="questionTitle">Carregando pergunta…</h2>
+        <div class="timer">
+          <div class="timer-bar"><span id="timerBar"></span></div>
+          <div id="timerText" class="timer-text">Tempo: —</div>
+        </div>
+      </div>
+      <div id="options" class="options-grid"></div>
+      <p id="feedback" class="feedback"></p>
+    </section>
+
+    <!-- Pódio -->
+    <section id="podiumScreen" class="screen card">
+      <h2>🏆 Pódio</h2>
+      <div id="podium" class="podium-grid"></div>
+      <h3>Ranking Completo</h3>
+      <div id="fullRanking" class="ranking"></div>
+      <div class="lobby-actions">
+        <button type="button" class="btn" onclick="resetSalaManual()">Jogar Novamente</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Rodapé com crédito do autor -->
+  <footer class="footer">
+    <span>feito por <strong>@euotavio.a</strong></span>
+  </footer>
+
+  <!-- Canvas de confete -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Áudio de fanfarra -->
+  <audio id="fanfare" src="img/fanfare.wav" preload="auto"></audio>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
