@@ -8,10 +8,39 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Estilo específico do QR */
+    .qr-wrapper {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .qr-wrapper p {
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #d1d5db;
+    }
+    #qrcode {
+      width: 200px;
+      height: 200px;
+      margin: 0 auto;
+    }
+    #qrcode img, #qrcode canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+    /* Responsividade */
+    @media (max-width: 680px) {
+      #qrcode { width: 150px; height: 150px; }
+    }
+    @media (max-width: 420px) {
+      #qrcode { width: 120px; height: 120px; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Fundo + overlay para contraste -->
+  <!-- Fundo + overlay -->
   <div class="background"></div>
   <div class="backdrop"></div>
 
@@ -41,15 +70,21 @@
       </div>
       <div class="role-grid">
         <button type="button" class="role-card" onclick="joinLobby('Espermatozoide')">
-          <div class="role-emoji">🐟</div>
+          <div class="role-emoji"></div>
           <div class="role-title">Espermatozoide</div>
-          <img src="img/espermatozoide.png" class="gamete-icon" alt="" />
+          <img src="img/espermatozoide.png" class="gamete-icon" alt="Espermatozoide" />
         </button>
         <button type="button" class="role-card" onclick="joinLobby('Óvulo')">
-          <div class="role-emoji">🥚</div>
+          <div class="role-emoji"></div>
           <div class="role-title">Óvulo</div>
-          <img src="img/ovulo.png" class="gamete-icon" alt="" />
+          <img src="img/ovulo.png" class="gamete-icon" alt="Óvulo" />
         </button>
+      </div>
+
+      <!-- QR Code -->
+      <div class="qr-wrapper">
+        <p>📱 Scaneie o QR Code para jogar!</p>
+        <div id="qrcode"></div>
       </div>
     </section>
 
@@ -58,7 +93,6 @@
       <h2>Sala de Espera</h2>
       <p class="subtitle">O host inicia a partida quando todos estiverem prontos</p>
 
-      <!-- Claim de host via PIN -->
       <div class="host-claim">
         <input id="hostPinInput" placeholder="PIN do host" />
         <button id="claimHostBtn" type="button" class="btn" onclick="claimHost()">Assumir Host</button>
@@ -98,17 +132,25 @@
 
   </main>
 
-  <!-- Rodapé com crédito do autor -->
   <footer class="footer">
     <span>feito por <strong>@euotavio.a</strong></span>
   </footer>
 
-  <!-- Canvas de confete -->
   <canvas id="confetti-canvas"></canvas>
-
-  <!-- Áudio de fanfarra -->
   <audio id="fanfare" src="img/fanfare.wav" preload="auto"></audio>
 
+  <!-- Lib QRCode + script -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
   <script type="module" src="script.js"></script>
+  <script>
+    new QRCode(document.getElementById("qrcode"), {
+      text: "https://tavinzss.github.io/corrida-dos-gametas/",
+      width: 200,
+      height: 200,
+      colorDark : "#ffffff",
+      colorLight : "transparent",
+      correctLevel : QRCode.CorrectLevel.H
+    });
+  </script>
 </body>
 </html>
